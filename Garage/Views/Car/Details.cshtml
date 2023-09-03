@@ -1,0 +1,18 @@
+﻿@model Car
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="container">
+    <div class="card">
+        <h5 class="card-header">Info Product</h5>
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text">@Model.Color</p>
+            <p class="fw-bold">Price: <span class="badge bg-primary">@Model.Price</span></p>
+            <a asp-controller="Car" asp-action="Index" class="btn btn-primary">Go back</a>
+            <a asp-controller="Car" asp-action="Delete" asp-route-id=@Model.Id class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+</div>
