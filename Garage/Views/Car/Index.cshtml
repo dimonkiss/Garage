@@ -3,27 +3,59 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    string carImagePlaceHolder = @"https://www.seat.com.mt/content/dam/public/seat-website/carworlds/compare/default-image/ghost.png";
 }
 <div class="container">
     @if (Model.Any())
     {
         <h3>Count Car: @Model.Count()</h3>
         <div class="row">
-            @foreach (var Car in Model)
-            {
-                <div class="col-sm-4">
-                    <div class="card">
-                        <img src="@Car.ImagePath" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">@Car.Name</h5>
-                            <p class="card-text">@Car.Color</p>
-                            <p class="fw-bold">Price <span class="badge bg-primary">@Car.Price</span></p>
-                            <a asp-controller="Car" asp-action="Details" asp-route-id=@Car.Id class="btn btn-dark">Details</a>
-                            <a asp-controller="Car" asp-action="Delete" asp-route-id=@Car.Id class="btn btn-danger">Delete</a>
-                        </div>
-                    </div>
-                </div>
-            }
+            <div class="col-1 m-3">
+                <a asp-controller="Car" asp-action="Create" class="btn btn-primary" role="button">Create</a>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Color</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Operations</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var Car in Model)
+                    {
+                        <tr>
+                            <th scope="row">@Car.Id</th>
+                            <td>
+                                @if (Car.ImagePath == null)
+                                {
+                                    <img src="@carImagePlaceHolder" class="card-img-top w=25" alt="...">
+                                }
+                                else
+                                {
+                                    <img src="@Car.ImagePath" class="card-img-top w=25" alt="...">
+                                }
+                            </td>
+                            <td><p>@Car.Name</p></td>
+                            <td><p>@Car.Color</p></td>
+                            <td><p>@Car.Price</p></td>
+
+                            <td><p>@Car.Category?.Name</p></td>
+                            <td>
+                                <a asp-controller="Car" asp-action="Details" asp-route-id=@Car.Id>Details</a>
+                                <a asp-controller="Car" asp-action="Edit" asp-route-id=@Car.Id>Edit</a>
+                                <a asp-controller="Car" asp-action="Delete" asp-route-id=@Car.Id>Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
         </div>
 
     }

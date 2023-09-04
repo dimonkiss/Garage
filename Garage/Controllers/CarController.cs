@@ -3,13 +3,14 @@ using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Garage.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace ShopMVC.Controllers
+namespace Garage.Controllers
 {
-    public class ProductController : Controller
+    public class CarController : Controller
     {
         private readonly GarageDbContext _context;
-        public ProductController(GarageDbContext context)
+        public CarController(GarageDbContext context)
         {
             _context = context;
         }
@@ -26,16 +27,16 @@ namespace ShopMVC.Controllers
         public IActionResult Details(int? id)
         {
             //find in DataBase
-            var car= _context.Cars.Include(p => p.Category).FirstOrDefault(p => p.Id == id);
-            if (car== null) return NotFound();
+            var car = _context.Cars.Include(p => p.Category).FirstOrDefault(p => p.Id == id);
+            if (car == null) return NotFound();
             return View(car);
         }
 
         public IActionResult Delete(int? id)
         {
             //find in DataBase
-            var car= _context.Cars.FirstOrDefault(p => p.Id == id);
-            if (car!= null)
+            var car = _context.Cars.FirstOrDefault(p => p.Id == id);
+            if (car != null)
             {
                 _context.Cars.Remove(car);
                 _context.SaveChanges();
@@ -45,6 +46,44 @@ namespace ShopMVC.Controllers
             // return Redirect("~/Home/Index");
 
 
+        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            var categories = _context.Categories.ToList();
+            ViewBag.CategoryList = new SelectList(categories, "Id", "Name");
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Car car)
+        {
+            _context.Cars.Add(car);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+
+            var Car = _context.Cars.Include(p => p.Category).FirstOrDefault(p => p.Id == id);
+            if (Car != null)
+            {
+                var categories = _context.Categories.ToList();
+                ViewBag.ListCategory = new SelectList(categories, "Id", "Name", Car.CategoryId);
+                return View(Car);
+
+            }
+            return NotFound();
+        }
+
+
+        [HttpPost]
+        public IActionResult Edit(Car Car)
+        {
+            _context.Cars.Update(Car);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

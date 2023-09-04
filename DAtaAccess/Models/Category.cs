@@ -15,6 +15,6 @@ namespace DataAccess.Models
         [Required]
         public required string Name { get; set; }
         public string? Description { get; set; }
-        public ICollection<Car> Cars { get; set; } = null!;
+        public ICollection<Car> Cars { get;  } = new List<Car>();
     }
 }
