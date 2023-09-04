@@ -42,6 +42,16 @@ namespace DataAccess.Data
                     ImagePath = @"https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Audi_RS7_C8_at_IAA_2019_IMG_0307.jpg/1024px-Audi_RS7_C8_at_IAA_2019_IMG_0307.jpg"
                     ,
                     CategoryId = 3
+                },
+                new Car()
+                {
+                    Id = 4,
+                    Name = "BMW M5",
+                    Color = "Test",
+                    Price = 1003,
+                    ImagePath = @"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Kunmadaras_Motorsport_2021._szeptember_19._JM_%28157%29.jpg/1024px-Kunmadaras_Motorsport_2021._szeptember_19._JM_%28157%29.jpg"
+                    ,
+                    CategoryId = 3
                 }
             };
         }

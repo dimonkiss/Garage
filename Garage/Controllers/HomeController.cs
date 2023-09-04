@@ -1,4 +1,5 @@
 ﻿using DataAccess.Data;
+using DataAccess.Models;
 using Garage.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,10 +17,25 @@ namespace Garage.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? categoryId)
         {
+            List<Category> categories = _context.Categories.ToList();
+            categories.Insert(0, new Category { Id = 0, Name = "All", Description = "All products" });
+            ViewBag.Categories = categories;
             var cars = _context.Cars.Include(cars => cars.Category).ToList(); ;
-            return View(cars); 
+            if (categoryId != null && categoryId > 0) 
+            { 
+                cars = _context.Cars.Where(p=>p.CategoryId == categoryId).ToList();
+            }
+            if(categoryId == null)
+            {
+                ViewBag.ActiveCategoryId = 0;
+            }
+            else
+            {
+                ViewBag.ActiveCategoryId = categoryId;
+            }
+            return View(cars);
             //return View();
         }
 

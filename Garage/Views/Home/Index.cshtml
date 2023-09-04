@@ -1,34 +1,60 @@
 ﻿@model List<DataAccess.Models.Car>
 @{
     ViewData["Title"] = "Home Page";
+
 }
 
 <div class="container">
-    @if (Model.Any())
-    {
-        <h3>Count Car: @Model.Count()</h3>
-        <div class="row">
-            @foreach (var Car in Model)
+    <div class="row">
+        <div class="col-3">
+            <ul class="nav flex-column">
+                @foreach (var cat in ViewBag.Categories)
+                {
+                    @if (ViewBag.ActiveCategoryId == cat.Id )
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link disabled" aria-current="page" >@cat.Name</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index" asp-route-categoryId=@cat.Id>@cat.Name</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+        <div class="col-9">
+
+            @if (Model.Any())
             {
-                <div class="col-sm-4">
-                    <div class="card">
-                        <img src="@Car.ImagePath" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">@Car.Name</h5>
-                            <p class="card-text">@Car.Color</p>
-                            <p class="fw-bold">Price <span class="badge bg-primary">@Car.Price</span></p>
-                            <a asp-controller="Car" asp-action="Details" asp-route-id=@Car.Id class="btn btn-dark">Details</a>
-                            <a asp-controller="Car" asp-action="Delete" asp-route-id=@Car.Id class="btn btn-danger">Delete</a>
+
+                <div class="row">
+                    @foreach (var Car in Model)
+                    {
+                        <div class="col-sm-4">
+                            <div class="card">
+                                <img src="@Car.ImagePath" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">@Car.Name</h5>
+                                    <p class="card-text">@Car.Color</p>
+                                    <p class="fw-bold">Price <span class="badge bg-primary">@Car.Price</span></p>
+                                    <a asp-controller="Home" asp-action="Details" asp-route-id=@Car.Id class="btn btn-dark">Details</a>
+                                    <a asp-controller="Home" asp-action="Delete" asp-route-id=@Car.Id class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    }
+                </div>
+
+            }
+            else
+            {
+                <div class="row">
+                    <h3>Cars was not found...</h3>
                 </div>
             }
         </div>
-
-    }
-    else
-    {
-        <h3>Cars was not found...</h3>
-    }
-
+    </div>
 </div>

@@ -1,4 +1,4 @@
-﻿@model List<Car>
+﻿@model List<DataAccess.Models.Car>
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -13,6 +13,7 @@
             {
                 <div class="col-sm-4">
                     <div class="card">
+                        <img src="@Car.ImagePath" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">@Car.Name</h5>
                             <p class="card-text">@Car.Color</p>
