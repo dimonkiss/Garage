@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.SqlServer.Server;
 
 using DataAccess.Data;
+using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
