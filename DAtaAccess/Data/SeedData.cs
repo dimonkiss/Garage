@@ -36,10 +36,10 @@ namespace DataAccess.Data
                 new Car()
                 {
                     Id = 3,
-                    Name = "Audi RS6",
+                    Name = "Audi RS7",
                     Color = "Test2",
                     Price = 1002,
-                    ImagePath = @"https://uk.wikipedia.org/wiki/%D0%A4%D0%B0%D0%B9%D0%BB:Audi_RS6_Avant_C8_1X7A0305.jpg"
+                    ImagePath = @"https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Audi_RS7_C8_at_IAA_2019_IMG_0307.jpg/1024px-Audi_RS7_C8_at_IAA_2019_IMG_0307.jpg"
                     ,
                     CategoryId = 3
                 }
