@@ -1,4 +1,4 @@
-﻿@model List<DataAccess.Models.Car>
+﻿@model List<DataAccess.Entities.Car>
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -47,9 +47,9 @@
 
                             <td><p>@Car.Category?.Name</p></td>
                             <td>
-                                <a asp-controller="Car" asp-action="Details" asp-route-id=@Car.Id>Details</a>
+                                <a asp-controller="Car" asp-route-returnURL="@Context.Request.Path" asp-action="Details" asp-route-id=@Car.Id>Details</a>
                                 <a asp-controller="Car" asp-action="Edit" asp-route-id=@Car.Id>Edit</a>
-                                <a asp-controller="Car" asp-action="Delete" asp-route-id=@Car.Id>Delete</a>
+                                <a  asp-controller="Car" asp-action="Delete" asp-route-id=@Car.Id>Delete</a>
                             </td>
                         </tr>
                     }

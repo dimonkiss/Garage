@@ -1,12 +1,13 @@
 ﻿using DataAccess.Data;
-using DataAccess.Models;
+using DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Garage.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using Microsoft.AspNetCore.Authorization;
 namespace Garage.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CarController : Controller
     {
         private readonly GarageDbContext _context;
@@ -24,11 +25,13 @@ namespace Garage.Controllers
             var Cars = _context.Cars.Include(p => p.Category).ToList();
             return View(Cars);
         }
-        public IActionResult Details(int? id)
+        [AllowAnonymous]
+        public IActionResult Details(int? id, string returnURL= null)
         {
             //find in DataBase
             var car = _context.Cars.Include(p => p.Category).FirstOrDefault(p => p.Id == id);
             if (car == null) return NotFound();
+            ViewBag.ReturnURL = returnURL;
             return View(car);
         }
 
@@ -58,6 +61,14 @@ namespace Garage.Controllers
         [HttpPost]
         public IActionResult Create(Car car)
         {
+            if (!ModelState.IsValid)
+            {
+                var categories = _context.Categories.ToList();
+                ViewBag.CategoryList = new SelectList(categories, "Id", "Name");
+
+                return View(car);
+            }
+                
             _context.Cars.Add(car);
             _context.SaveChanges();
             return RedirectToAction("Index");

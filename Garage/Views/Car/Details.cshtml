@@ -1,18 +1,47 @@
-﻿@model DataAccess.Models.Car
+﻿@model DataAccess.Entities.Car
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    string carImagePlaceHolder = @"https://www.seat.com.mt/content/dam/public/seat-website/carworlds/compare/default-image/ghost.png";
 }
 <div class="container">
     <div class="card">
-        <h5 class="card-header">Info Product</h5>
+        <h5 class="card-header">Info Car</h5>
+        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="10000">
+                    <img src="@Model.ImagePath" class="card-img-top w=25" alt="...">
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                    <img src="@carImagePlaceHolder" class="card-img-top w=25" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="@carImagePlaceHolder" class="card-img-top w=25" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
         <div class="card-body">
             <h5 class="card-title">@Model.Name</h5>
             <p class="card-text">@Model.Color</p>
             <p class="card-text">Category:<em>@Model.Category?.Name</em></p>
             <p class="fw-bold">Price: <span class="badge bg-primary">@Model.Price</span></p>
-            <a asp-controller="Car" asp-action="Index" class="btn btn-primary">Go back</a>
+            @if(ViewBag.ReturnURL == null)
+            {
+                <a asp-controller="Car" asp-action="Index" class="btn btn-primary">Go back</a>
+            }
+            else
+            {
+                <a href="@ViewBag.ReturnURL" class="btn btn-primary">Go back</a>
+            }
             <a asp-controller="Car" asp-action="Delete" asp-route-id=@Model.Id class="btn btn-danger">Delete</a>
         </div>
     </div>
